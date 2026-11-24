@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin | BankEase</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<main class="container">
+    <p class="eyebrow">ADMINISTRATION</p>
+    <h1>Admin dashboard</h1>
+    <p class="muted">View registered customers and control their bank accounts.</p>
+
+    <p class="success" th:if="${message}" th:text="${message}"></p>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+
+    <h2>Registered customers</h2>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Login status</th></tr></thead>
+            <tbody>
+            <tr th:each="u : ${users}">
+                <td th:text="${u.fullName}"></td>
+                <td th:text="${u.email}"></td>
+                <td th:text="${u.role}"></td>
+                <td th:text="${u.enabled ? 'Enabled' : 'Disabled'}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Bank account management</h2>
+    <p class="muted">Activate or freeze customer accounts. Permanently deleting an account also deletes its transaction history.</p>
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr><th>Account number</th><th>Customer</th><th>Email</th><th>Type</th><th>Balance</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="a : ${accounts}">
+                <td th:text="${a.accountNumber}"></td>
+                <td th:text="${a.customer.fullName}"></td>
+                <td th:text="${a.customer.email}"></td>
+                <td th:text="${a.accountType}"></td>
+                <td th:text="'₹ ' + ${#numbers.formatDecimal(a.balance,1,2)}"></td>
+                <td th:text="${a.status}"></td>
+                <td>
+                    <form th:if="${a.status != 'ACTIVE'}" th:action="@{/admin/account/status}" method="post" style="display:inline">
+                        <input type="hidden" name="accountId" th:value="${a.id}">
+                        <input type="hidden" name="status" value="ACTIVE">
+                        <button type="submit">Activate</button>
+                    </form>
+                    <form th:if="${a.status == 'ACTIVE'}" th:action="@{/admin/account/status}" method="post" style="display:inline">
+                        <input type="hidden" name="accountId" th:value="${a.id}">
+                        <input type="hidden" name="status" value="FROZEN">
+                        <button type="submit">Freeze</button>
+                    </form>
+                    <form th:action="@{/admin/account/delete}" method="post" style="display:inline"
+                          onsubmit="return confirm('Permanently delete this bank account and all its transaction history? This cannot be undone.');">
+                        <input type="hidden" name="accountId" th:value="${a.id}">
+                        <button type="submit">Delete permanently</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(accounts)}"><td colspan="7" class="muted">No bank accounts have been created yet.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

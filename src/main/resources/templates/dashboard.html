@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Customer Dashboard | BankEase</title><link rel="stylesheet" href="/css/style.css"></head>
+<body>
+<div th:replace="~{fragments :: nav}"></div>
+<main class="container">
+  <p class="eyebrow">CUSTOMER PORTAL</p>
+  <h1 th:text="'Welcome, ' + ${user.fullName}">Welcome</h1>
+  <p class="muted">Choose a service to continue.</p>
+  <p class="success" th:if="${message}" th:text="${message}"></p>
+  <section class="summary-strip">
+    <div><span class="muted">Your bank accounts</span><strong th:text="${#lists.size(accounts)}">0</strong></div>
+    <div><span class="muted">Account services</span><strong>5</strong></div>
+  </section>
+  <h2>Banking services</h2>
+  <div class="service-grid">
+    <a class="service-card" th:href="@{/account/open}"><span class="service-icon">＋</span><strong>Open New Account</strong><span class="muted">Apply for a savings or current account</span></a>
+    <a class="service-card" th:href="@{/account/details}"><span class="service-icon">▣</span><strong>Account Details</strong><span class="muted">View account numbers, balances and details</span></a>
+    <a class="service-card" th:href="@{/account/transfer}"><span class="service-icon">⇄</span><strong>Money Transfer</strong><span class="muted">Send money to another BankEase account</span></a>
+    <a class="service-card" th:href="@{/account/withdraw}"><span class="service-icon">↗</span><strong>Money Withdrawal</strong><span class="muted">Withdraw money from your account</span></a>
+    <a class="service-card" th:href="@{/account/deposit}"><span class="service-icon">↙</span><strong>Money Deposit</strong><span class="muted">Add money to your account balance</span></a>
+    <a class="service-card" th:href="@{/account/transactions}"><span class="service-icon">▤</span><strong>Transaction History</strong><span class="muted">Review your recent transactions</span></a>
+  </div>
+</main>
+</body></html>

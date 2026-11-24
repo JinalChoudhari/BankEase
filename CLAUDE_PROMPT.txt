@@ -1,0 +1,29 @@
+Create or extend a beginner-friendly Java banking web application named BankEase.
+
+Technology:
+- Java 17
+- Spring Boot 3
+- Maven
+- Spring MVC
+- Thymeleaf, HTML, CSS and Bootstrap
+- Spring Security with BCrypt password hashing
+- Spring Data JPA and Hibernate
+- MySQL
+
+Keep it a simple monolithic application. Do not use React, microservices, Kafka, Redis, Docker or complex cloud infrastructure.
+
+Roles:
+1. ADMIN: view registered customers, view accounts, activate/deactivate accounts, view transactions.
+2. CUSTOMER: register, login, view dashboard, open bank account, deposit, withdraw, transfer to another BankEase account, view transaction history, update profile.
+
+Database tables should include users, bank_accounts and bank_transactions. Use BigDecimal for all money values. Use @Transactional for deposit, withdrawal and transfer. Validate positive amounts, account ownership, active account status and sufficient balance. Never allow a customer to access another customer's account by changing an ID. Hash passwords with BCrypt. Keep transaction records when money moves.
+
+Deliver a complete IntelliJ-importable Maven project with:
+- Full folder structure and all Java source files
+- Thymeleaf templates and CSS
+- application.properties with clearly marked MySQL username/password placeholders
+- database/bankease.sql to create the database
+- README with setup instructions, default demo admin credentials, run instructions and test steps
+- Simple, clean, responsive UI
+
+Explain the purpose of each package and important class. Do not omit files or use pseudocode. Keep the code beginner-friendly and ensure all imports, mappings, dependencies and template names are consistent. This is an educational simulator only, not a real bank or payment integration.
